@@ -7,7 +7,7 @@ This repository contains an automated test suite for the Book Reservation API, b
 ## 🚀 How It Works
 
 - 🧪 Postman collection: `BookReservationSystem.postman_collection.json`
-- 🌍 Environment file: `BookEnv.postman_environment.json`
+- 🌍 Environment file: `BookReservationSystemEnvironment.postman_environment.json`
 - ⚙️ CI: [GitHub Actions](https://docs.github.com/en/actions) runs Newman on every push or PR to the `main` branch.
 - 📄 HTML reports are generated with each test run and uploaded as a downloadable artifact.
 
