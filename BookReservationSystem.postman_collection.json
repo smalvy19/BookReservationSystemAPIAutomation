@@ -1,0 +1,1088 @@
+{
+	"info": {
+		"_postman_id": "17b8cc4e-8310-46f9-9750-3c44c4334f4c",
+		"name": "Book Reservation System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11427885"
+	},
+	"item": [
+		{
+			"name": "API Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/status",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "API Status",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"status"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 18 Aug 2021 13:55:02 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "15"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"f-v/Y1JusChTxrQUzPtNAKycooOTA\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"OK\"\n    \"response\": \"All Good\"\n    \"id\": 1\n}"
+				}
+			]
+		},
+		{
+			"name": "List of Books",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/books",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "List of Books",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/books",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 18 Aug 2021 13:55:59 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "417"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"1a1-MfqhfTYtZO2sguD1mJq8Vf41WjU\""
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"The Russian\",\n        \"type\": \"fiction\",\n        \"available\": true\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Just as I Am\",\n        \"type\": \"non-fiction\",\n        \"available\": false\n    },\n    {\n        \"id\": 3,\n        \"name\": \"The Vanishing Half\",\n        \"type\": \"fiction\",\n        \"available\": true\n    },\n    {\n        \"id\": 4,\n        \"name\": \"The Midnight Library\",\n        \"type\": \"fiction\",\n        \"available\": true\n    },\n    {\n        \"id\": 5,\n        \"name\": \"Untamed\",\n        \"type\": \"non-fiction\",\n        \"available\": true\n    },\n    {\n        \"id\": 6,\n        \"name\": \"Viscount Who Loved Me\",\n        \"type\": \"fiction\",\n        \"available\": true\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get Single Book Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"/*if (response.id == 1)\r",
+							"\r",
+							"pm.test(\"Reponse is ok for ID 1\", function () {\r",
+							"\r",
+							"    pm.expect(pm.response.text()).to.include(\"The Russian\");\r",
+							"    pm.expect(response.id).to.eql(1);\r",
+							"    pm.expect(response.author).to.eql(\"James Patterson and James O. Born\");\r",
+							"    pm.expect(response.isbn).to.eql(\"1780899475\");\r",
+							"    pm.expect(response.type).to.eql(\"fiction\");\r",
+							"    pm.expect(response.price).to.eql(12.98);\r",
+							"    pm.expect(response.available).to.be.true;\r",
+							"    pm.expect(response.qty).to.be.lessThan(6);\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"else \r",
+							"\r",
+							"pm.test(\"Reponse is ok for ID 2\", function () {\r",
+							"\r",
+							"    pm.expect(pm.response.text()).to.include(\"Just as I Am\");\r",
+							"    pm.expect(response.id).to.eql(2);\r",
+							"    //pm.expect(response.author).to.eql(\"James Patterson and James O. Born\");\r",
+							"    //pm.expect(response.isbn).to.eql(\"1780899475\");\r",
+							"    pm.expect(response.type).to.eql(\"non-fiction\");\r",
+							"    pm.expect(response.price).to.eql(20.33);\r",
+							"    pm.expect(response.available).to.be.false;\r",
+							"   //pm.expect(response.qty).to.be.lessThan(6);\r",
+							"    \r",
+							"});*/\r",
+							"\r",
+							"let books = [\r",
+							"  {\r",
+							"    id: 1,\r",
+							"    name: \"The Russian\",\r",
+							"    author: \"James Patterson and James O. Born\",\r",
+							"    isbn: \"1780899475\",\r",
+							"    type: \"fiction\",\r",
+							"    price: 12.98,\r",
+							"    available: true,\r",
+							"    minQty: 6,\r",
+							"  },\r",
+							"  {\r",
+							"    id: 2,\r",
+							"    name: \"Just as I Am\",\r",
+							"    author: \"Cicely Tyson\",\r",
+							"    isbn: undefined,\r",
+							"    type: \"non-fiction\",\r",
+							"    price: 20.33,\r",
+							"    available: false,\r",
+							"    minQty: 2,\r",
+							"  },\r",
+							"  {\r",
+							"    id: 3,\r",
+							"    name: \"Just as I Am\",\r",
+							"    author: \"Cicely Tyson\",\r",
+							"    isbn: undefined,\r",
+							"    type: \"non-fiction\",\r",
+							"    price: 20.33,\r",
+							"    available: false,\r",
+							"    minQty: 2,\r",
+							"  },\r",
+							"];\r",
+							"\r",
+							"let bookData = books.find((book) => book.id === response.id);\r",
+							"\r",
+							"if (bookData === undefined) {\r",
+							"  pm.test(`ID ${response.id} is missing in book data`, function () {\r",
+							"    pm.expect(false).to.equal(true);\r",
+							"  });\r",
+							"}\r",
+							"\r",
+							"pm.test(`Response for ID ${response.id}`, function () {\r",
+							"  pm.expect(response[\"name\"]).to.eql(bookData.name);\r",
+							"  //pm.expect(response.id).to.eql(bookData.id);\r",
+							"  pm.expect(response.author).to.eql(bookData.author);\r",
+							"  pm.expect(response.isbn).to.eql(bookData.isbn);\r",
+							"  pm.expect(response.type).to.eql(bookData.type);\r",
+							"  pm.expect(response.price).to.eql(bookData.price);\r",
+							"  pm.expect(response.available).to.eql(bookData.available);\r",
+							"  //pm.expect(response.qty).to.lessThan(bookData.minQty);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}//books/:bookId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"",
+						"books",
+						":bookId"
+					],
+					"variable": [
+						{
+							"key": "bookId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Single Book Info Ex1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{MockServerUrl}}//books/:bookId",
+							"host": [
+								"{{MockServerUrl}}"
+							],
+							"path": [
+								"",
+								"books",
+								":bookId"
+							],
+							"variable": [
+								{
+									"key": "bookId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 18 Aug 2021 13:56:16 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "161"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"a1-Mcj+H8w3JMJfpTU/R3TvAdr/Z7E\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"name\": \"The Russian\",\n    \"author\": \"James Patterson and James O. Born\",\n    \"isbn\": \"1780899475\",\n    \"type\": \"fiction\",\n    \"price\": 12.98,\n    \"current-stock\": 12,\n    \"available\": true,\n    \"qty\": 5\n}"
+				},
+				{
+					"name": "Get Single Book Info Ex 2",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}//books/:bookId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"",
+								"books",
+								":bookId"
+							],
+							"variable": [
+								{
+									"key": "bookId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": 2,\n    \"name\": \"Just as I Am\",\n    \"author\": \"Cicely Tyson\",\n    \"type\": \"non-fiction\",\n    \"price\": 20.33,\n    \"current-stock\": 0,\n    \"available\": false\n}"
+				},
+				{
+					"name": "Get Single Book Info Ex 3",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}//books/:bookId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"",
+								"books",
+								":bookId"
+							],
+							"variable": [
+								{
+									"key": "bookId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"name\": \"Just as I Am\",\n    \"author\": \"Cicely Tyson\",\n    \"type\": \"non-fiction\",\n    \"price\": 20.33,\n    \"current-stock\": 0,\n    \"available\": false\n}"
+				}
+			]
+		},
+		{
+			"name": "Submit Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {\r",
+							"    \r",
+							"    pm.response.to.have.status(201);\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"/*pm.test(\"Response get Customer Name Env Variable\", () => {\r",
+							"    \r",
+							"    const cName = pm.environment.get(\"CustomerName\");\r",
+							"    console.log(cName);\r",
+							"    //pm.expect(\"CustomerName\").to.have.string(\"Shadman Alvy\");\r",
+							"    //pm.expect(pm.response.text()).to.include(pm.environment.get(\"CustomerName\"));\r",
+							"});\r",
+							"*/\r",
+							"// Set Order ID as env Variable\r",
+							"\r",
+							"//const jsonData = pm.response.json();\r",
+							"//pm.environment.set(\"OrderID\", jsonData.orderId);\r",
+							"try {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const orderId = jsonData.orderId;\r",
+							"\r",
+							"    if (orderId) {\r",
+							"        pm.environment.set(\"OrderID\", orderId);\r",
+							"        console.log(\"✅ OrderID set:\", orderId);\r",
+							"    } else {\r",
+							"        console.warn(\"⚠️ orderId not found in response.\");\r",
+							"    }\r",
+							"} catch (e) {\r",
+							"    console.error(\"❌ Failed to parse response JSON or set OrderID:\", e);\r",
+							"    console.log(\"Raw response:\", pm.response.text());\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.get(\"AccessToken\");\r",
+							"\r",
+							"// Set Customer Name as Shadman Alvy as a Env Variable\r",
+							"\r",
+							"//const cName = \"Shadman Alvy\";\r",
+							"//pm.environment.set(\"CustomerName\", cName);\r",
+							"\r",
+							"//generate random customer name\r",
+							"\r",
+							"function capFirst(string) {\r",
+							"    return string.charAt(0).toUpperCase() + string.slice(1);\r",
+							"}\r",
+							"\r",
+							"function getRandomInt(min, max) {\r",
+							"  \treturn Math.floor(Math.random() * (max - min)) + min;\r",
+							"}\r",
+							"\r",
+							"function generateName(){\r",
+							"\tvar firstName = [\"john\",\"harry\",\"steve\",\"jack\",\"thomas\",\"mesut\"];\r",
+							"\r",
+							"\tvar lastName = [\"kane\",\"terry\",\"gerrard\",\"wilshere\",\"ozil\",\"muller\"];\r",
+							"\r",
+							"\tvar name = capFirst(firstName[getRandomInt(0, firstName.length + 1)]) + ' ' + capFirst(lastName[getRandomInt(0, lastName.length + 1)]);\r",
+							"\treturn name;\r",
+							"}\r",
+							"\r",
+							"console.log(generateName());\r",
+							"pm.environment.set(\"CustomerName\", generateName());\r",
+							"\r",
+							"\r",
+							"\r",
+							"//set random customer name of 6 letters as environment variable\r",
+							"\r",
+							"/*function RandomName() {\r",
+							"  var custName = \"\";\r",
+							"  var possible = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\r",
+							"\r",
+							"  for (var i = 0; i < 6; i++)\r",
+							"    custName += possible.charAt(Math.floor(Math.random() * possible.length));\r",
+							"\r",
+							"  return custName;\r",
+							"}\r",
+							"\r",
+							"//console.log(RandomName());\r",
+							"\r",
+							"//pm.environment.set(\"CustomerName\", RandomName());\r",
+							"*/\r",
+							" //set random book id as env variable\r",
+							" \r",
+							" const rndInt = Math.floor(Math.random() * 6) + 1\r",
+							" pm.environment.set(\"BookID\", rndInt);\r",
+							"\r",
+							"console.log(rndInt);\r",
+							"\r",
+							"//random 4 digit number with starting digits 12\r",
+							"\r",
+							"//var val = Math.floor(1200 + (1299-1200) * Math.random());\r",
+							"//console.log(val);\r",
+							"\r",
+							"    "
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"bookId\": {{BookID}},\r\n  \"customerName\": \"{{CustomerName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Submit Order",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bookId\": {{Book ID}},\r\n  \"customerName\": \"{{CustomerName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 18 Aug 2021 13:56:31 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "50"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"32-rSlwVoUy06i6eKnZ09sQz6IrilE\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"created\": true,\n    \"orderId\": \"cpQZWFP-tqseYL73pWayQ\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get All Orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"//pm.test(\"Response Data contains Shadman Alvy\", function () {\r",
+							"    //const response = pm.response.json();\r",
+							"   // pm.expect(response.customerName).to.eql('Shadman Alvy');\r",
+							"    //pm.response.to.have.body(\"Shadman Alvy\");  \r",
+							"    // pm.expect(pm.response.text()).to.include(\"Shadman Alvy\");\r",
+							"//});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/orders",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get All Orders",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 18 Aug 2021 13:56:45 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "329"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"149-GuB9bZzScT1enjpeMZyfOAplYs8\""
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"NlH-oRu_oHLHXsLJN08BA\",\n        \"bookId\": 5,\n        \"customerName\": \"Shadman Alvy\",\n        \"createdBy\": \"ed0817627e365057e5d26caec35c1310dd08fd20094a83c7d53e2dae103e60ac\",\n        \"quantity\": 1\n    },\n    {\n        \"id\": \"cpQZWFP-tqseYL73pWayQ\",\n        \"bookId\": 6,\n        \"customerName\": \"Shadman Alvy\",\n        \"createdBy\": \"ed0817627e365057e5d26caec35c1310dd08fd20094a83c7d53e2dae103e60ac\",\n        \"quantity\": 1\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get Single Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"pm.test(\"Validate Order ID\", function () {\r",
+							"    pm.expect(response.id).to.eql(pm.environment.get(\"OrderID\"));\r",
+							"    \r",
+							"}); "
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders/:orderId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "{{OrderID}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Single Order",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/:orderId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{Order ID}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 18 Aug 2021 13:57:11 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "163"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						},
+						{
+							"key": "etag",
+							"value": "W/\"a3-28e9pXLAcBhmqT4l6tVGUZ+txa0\""
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"cpQZWFP-tqseYL73pWayQ\",\n    \"bookId\": 6,\n    \"customerName\": \"Shadman Alvy\",\n    \"createdBy\": \"ed0817627e365057e5d26caec35c1310dd08fd20094a83c7d53e2dae103e60ac\",\n    \"quantity\": 1\n}"
+				}
+			]
+		},
+		{
+			"name": "Update an Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerName\": \"{{$randomFullName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders/:orderId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "{{OrderID}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update an Order",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customerName\": \"Shadman Alvy Update\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/:orderId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{Order ID}}"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 18 Aug 2021 13:57:26 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Delete an Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/orders/:orderId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "{{OrderID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authentication",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function generateEmail() {",
+							"",
+							"var chars = 'abcdefghijklmnopqrstuvwxyz1234567890';",
+							"var string = '';",
+							"for(var ii=0; ii<15; ii++){",
+							"    string += chars[Math.floor(Math.random() * chars.length)];",
+							"}",
+							"return (string + '@test.com');",
+							"",
+							"}",
+							"pm.environment.set(\"email\", generateEmail());",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"AccessToken\",jsonData.accessToken);\r",
+							"\r",
+							"const jsonDatareq = JSON.parse(request.data);\r",
+							"pm.environment.set(\"ClientName\", jsonDatareq.clientName);\r",
+							"console.log(pm.environment.get(\"ClientName\", jsonDatareq.clientName));\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"clientName\": \"{{$randomFullName}}\",\r\n   \"clientEmail\": \"{{email}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api-clients",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api-clients"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const mockUrl = \"https://db110378-d9e3-46c4-aeaa-47aa3d55209f.mock.pstmn.io\"",
+					"pm.environment.set(\"MockServerUrl\", mockUrl);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
