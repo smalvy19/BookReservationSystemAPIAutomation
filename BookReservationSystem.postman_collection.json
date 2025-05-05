@@ -7,6 +7,76 @@
 	},
 	"item": [
 		{
+			"name": "Authentication",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function generateEmail() {",
+							"",
+							"var chars = 'abcdefghijklmnopqrstuvwxyz1234567890';",
+							"var string = '';",
+							"for(var ii=0; ii<15; ii++){",
+							"    string += chars[Math.floor(Math.random() * chars.length)];",
+							"}",
+							"return (string + '@test.com');",
+							"",
+							"}",
+							"pm.environment.set(\"email\", generateEmail());",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"AccessToken\",jsonData.accessToken);\r",
+							"\r",
+							"const jsonDatareq = JSON.parse(request.data);\r",
+							"pm.environment.set(\"ClientName\", jsonDatareq.clientName);\r",
+							"console.log(pm.environment.get(\"ClientName\", jsonDatareq.clientName));\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"clientName\": \"{{$randomFullName}}\",\r\n   \"clientEmail\": \"{{email}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api-clients",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api-clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "API Status",
 			"event": [
 				{
@@ -978,76 +1048,6 @@
 							"key": "orderId",
 							"value": "{{OrderID}}"
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Authentication",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"function generateEmail() {",
-							"",
-							"var chars = 'abcdefghijklmnopqrstuvwxyz1234567890';",
-							"var string = '';",
-							"for(var ii=0; ii<15; ii++){",
-							"    string += chars[Math.floor(Math.random() * chars.length)];",
-							"}",
-							"return (string + '@test.com');",
-							"",
-							"}",
-							"pm.environment.set(\"email\", generateEmail());",
-							"",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const jsonData = JSON.parse(responseBody);\r",
-							"pm.environment.set(\"AccessToken\",jsonData.accessToken);\r",
-							"\r",
-							"const jsonDatareq = JSON.parse(request.data);\r",
-							"pm.environment.set(\"ClientName\", jsonDatareq.clientName);\r",
-							"console.log(pm.environment.get(\"ClientName\", jsonDatareq.clientName));\r",
-							"\r",
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n   \"clientName\": \"{{$randomFullName}}\",\r\n   \"clientEmail\": \"{{email}}\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/api-clients",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api-clients"
 					]
 				}
 			},
