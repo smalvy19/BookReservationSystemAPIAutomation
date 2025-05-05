@@ -61,7 +61,7 @@ You can find it under the **Artifacts** section in your GitHub Actions run:
 | File                                         | Description                            |
 |----------------------------------------------|----------------------------------------|
 | `BookReservationSystem.postman_collection.json` | The Postman API test collection         |
-| `BookEnv.postman_environment.json`           | Postman environment variables           |
+| `BookReservationStstemEnvironment.postman_environment.json`           | Postman environment variables           |
 | `.github/workflows/newman.yml`               | GitHub Actions workflow for CI testing |
 | `README.md`                                  | This file                               |
 
