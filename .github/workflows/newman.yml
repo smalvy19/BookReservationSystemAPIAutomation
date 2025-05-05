@@ -21,7 +21,10 @@ jobs:
           node-version: '18'
 
       - name: Install Newman
-        run: npm install -g newman
+        run: |
+            npm install -g newman
+            npm install -g newman-reporter-html
+
 
       - name: Run API Tests and Generate HTML Report
         run: |
