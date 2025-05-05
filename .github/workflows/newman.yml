@@ -25,14 +25,18 @@ jobs:
 
       - name: Run API Tests and Generate HTML Report
         run: |
-          mkdir -p newman
+          echo "Creating reports directory..."
+          mkdir -p reports
+          echo "Running Newman collection..."
           newman run BookReservationSystem.postman_collection.json \
             -e BookReservationSystemEnvironment.postman_environment.json \
             --reporters cli,html \
-            --reporter-html-export newman/newman-report.html
+            --reporter-html-export reports/newman-report.html
+          echo "List contents of reports directory:"
+          ls -R reports
 
       - name: Upload Newman HTML Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: newman-html-report
-          path: newman-report.html
+          path: reports
